@@ -63,3 +63,5 @@ server_url: ""
 5. minichat文件夹内，放置下载好的可执行文件，保证 config.yaml 和 可执行文件在同目录下，双击打开可执行文件即可
 5. 成功后，通过ip+端口号访问
 
+![](chatdemo1.png)   
+![](chatdemo2.png)  
