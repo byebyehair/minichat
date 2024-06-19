@@ -21,7 +21,7 @@ Minichat 是一款极简、极轻、无痕匿名聊天工具，开发此程序�
 
 ## 部署方式
 
-### Docker compose 方式（推荐，仅支持 linux-amd64 机器）
+### Docker compose 方式（推荐｜仅支持 linux-amd64 机器）
 
 1. 环境要求: Git、Docker、Docker-Compose
 2. 克隆项目:   
