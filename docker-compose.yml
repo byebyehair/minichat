@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  server:
+    image: okhanyu/minichat:latest
+    container_name: minichat
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - "$PWD/config.yaml:/app/config.yaml"

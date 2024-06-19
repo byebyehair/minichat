@@ -1,0 +1,547 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="referrer" content="strict-origin" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0,viewport-fit=cover,shrink-to-fit=no">
+    <title>Mini Chat</title>
+    <link rel="icon" href="data:image/png;base64,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">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #f4f8ff;;
+            font-family: 'Helvetica Neue';
+            font-size: 10px;
+            line-height: 1;
+            color: #414141;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.25em;
+        }
+
+        /*.datestamp {
+          display: block;
+          text-align: center;
+          font-weight: bold;
+          margin-bottom: 8px;
+          color: #8b91a0;
+          text-shadow: 1px 1px 0 rgba(255,255,255,0.6);
+        }
+        */
+
+        .container {
+            padding: 30px 20px;
+            margin: 0 auto;
+            max-width: 500px;
+            /*border : 1px solid #000;*/
+        }
+
+        .bubble {
+            box-sizing: border-box;
+            float: left;
+            width: auto;
+            max-width: 80%;
+            position: relative;
+            clear: both;
+
+            background: #95c2fd;
+            background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.15, #bee2ff), color-stop(1, #95c2fd));
+            background-image: -webkit-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+            background-image: -moz-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+            background-image: -ms-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+            background-image: -o-linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+            background-image: linear-gradient(bottom, #bee2ff 15%, #95c2fd 100%);
+            border: solid 1px rgba(0,0,0,0.5);
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+
+            -webkit-box-shadow: inset 0 8px 5px rgba(255,255,255,0.65), 0 1px 2px rgba(0,0,0,0.2);
+            -moz-box-shadow: inset 0 8px 5px rgba(255,255,255,0.65), 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: inset 0 8px 5px rgba(255,255,255,0.65), 0 1px 2px rgba(0,0,0,0.2);
+
+            margin-bottom: 20px;
+            padding: 6px 20px;
+            color: #000;
+            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+            word-wrap: break-word;
+        }
+
+        .bubble:before, .bubble:after {
+            border-radius: 20px / 5px;
+            content: '';
+            display: block;
+            position: absolute;
+        }
+
+        .bubble:before {
+            border: 10px solid transparent;
+            /*  border-top-color: rgba(0,0,0,0.5);
+              bottom: 0px;*/
+            border-top-color: rgba(0, 0, 0, 0.5);
+            top: 0px;
+            left: -7px;
+            z-index: -2;
+        }
+
+        .bubble:after {
+            border: 8px solid transparent;
+            /*  border-top-color: #bee2ff;*/ /* arrow color */
+            /*  bottom: 1px;*/
+            border-top-color: #bee2ff;
+            top: 1px;
+            left: -5px;
+        }
+
+
+        .bubble-alt {
+            float: right;
+        }
+        .bubble-alt:before {
+            left: auto;
+            right: -7px;
+        }
+        .bubble-alt:after {
+            left: auto;
+            right: -5px;
+        }
+
+        .bubble p {
+            font-size: 1.4em;
+        }
+
+        /* green bubble */
+        .green {
+            background: #7acd47;
+            background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.15, #ace44b),color-stop(1, #7acd47));
+            background-image: -webkit-linear-gradient(bottom, #ace44b 15%, #7acd47 100%);
+            background-image: -moz-linear-gradient(bottom, #ace44b 15%, #7acd47 100%);
+            background-image: -ms-linear-gradient(bottom, #ace44b 15%, #7acd47 100%);
+            background-image: -o-linear-gradient(bottom, #ace44b 15%, #7acd47 100%);
+            background-image: linear-gradient(bottom, #ace44b 15%, #7acd47 100%);
+
+        }
+        .green:after {
+            border-top-color: #ace44b;
+        }
+
+        /* white bubble */
+        .white {
+            background: #7acd47;
+            background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.15, #e5e5e5),color-stop(1, #dbdbdb));
+            background-image: -webkit-linear-gradient(bottom, #e5e5e5 15%, #dbdbdb 100%);
+            background-image: -moz-linear-gradient(bottom, #e5e5e5 15%, #dbdbdb 100%);
+            background-image: -ms-linear-gradient(bottom, #e5e5e5 15%, #dbdbdb 100%);
+            background-image: -o-linear-gradient(bottom, #e5e5e5 15%, #dbdbdb 100%);
+            background-image: linear-gradient(bottom, #e5e5e5 15%, #dbdbdb 100%);
+
+        }
+        .white:after {
+            border-top-color: #e5e5e5;
+        }
+
+        /* yellow bubble */
+        .yellow {
+            background: #7acd47;
+            background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.15, #fcf3c3),color-stop(1, #f4e371));
+            background-image: -webkit-linear-gradient(bottom, #fcf3c3 15%, #f4e371 100%);
+            background-image: -moz-linear-gradient(bottom, #fcf3c3 15%, #f4e371 100%);
+            background-image: -ms-linear-gradient(bottom, #fcf3c3 15%, #f4e371 100%);
+            background-image: -o-linear-gradient(bottom, #fcf3c3 15%, #f4e371 100%);
+            background-image: linear-gradient(bottom, #fcf3c3 15%, #f4e371 100%);
+
+        }
+        .yellow:after {
+            border-top-color: #fcf3c3;
+        }
+
+        /* red bubble */
+        .red {
+            background: #7acd47;
+            background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.15, #ea8378),color-stop(1, #e2675a));
+            background-image: -webkit-linear-gradient(bottom, #ea8378 15%, #e2675a 100%);
+            background-image: -moz-linear-gradient(bottom, #ea8378 15%, #e2675a 100%);
+            background-image: -ms-linear-gradient(bottom, #ea8378 15%, #e2675a 100%);
+            background-image: -o-linear-gradient(bottom, #ea8378 15%, #e2675a 100%);
+            background-image: linear-gradient(bottom, #ea8378 15%, #e2675a 100%);
+
+        }
+        .red:after {
+            border-top-color: #ea8378;
+        }
+
+        /* pink bubble */
+        .pink {
+            background: #7acd47;
+            background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.15, #ffbee3),color-stop(1, #f8a5ce));
+            background-image: -webkit-linear-gradient(bottom, #ffbee3 15%, #f8a5ce 100%);
+            background-image: -moz-linear-gradient(bottom, #ffbee3 15%, #f8a5ce 100%);
+            background-image: -ms-linear-gradient(bottom, #ffbee3 15%, #f8a5ce 100%);
+            background-image: -o-linear-gradient(bottom, #ffbee3 15%, #f8a5ce 100%);
+            background-image: linear-gradient(bottom, #ffbee3 15%, #f8a5ce 100%);
+        }
+        .pink:after {
+            border-top-color: #ffbee3;
+        }
+
+        .rainbow{
+            background: -moz-linear-gradient(326deg, #fe6001 0%, #F4F60C 22%, #84fe01 41%, #01fe84 65%, #0196fe 100%);/* FF3.6+ */
+            background: -webkit-gradient(linear, 326deg, color-stop(0%, #fe6001), color-stop(22%, #F4F60C), color-stop(41%, #84fe01), color-stop(65%, #01fe84), color-stop(100%, #0196fe));/* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(326deg, #fe6001 0%, #F4F60C 22%, #84fe01 41%, #01fe84 65%, #0196fe 100%);/* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(326deg, #fe6001 0%, #F4F60C 22%, #84fe01 41%, #01fe84 65%, #0196fe 100%);/* Opera 11.10+ */
+            background: -ms-linear-gradient(326deg, #fe6001 0%, #F4F60C 22%, #84fe01 41%, #01fe84 65%, #0196fe 100%);/* IE10+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe6001', endColorstr='#0196fe', GradientType='1'); /* for IE */
+            background: linear-gradient(124deg, #fe6001 0%, #F4F60C 22%, #84fe01 41%, #01fe84 65%, #0196fe 100%);/* W3C */
+        }
+
+        .rainbow:after{
+            border-top-color: #0196fe;
+
+        }
+
+
+        /****/
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .container {
+            height: calc(100% - 64px - 106px);
+            overflow: auto;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            ::-webkit-scrollbar {
+                /* Chrome, Safari, and Opera */
+                display: none;
+            }
+        }
+
+        #popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            overflow: hidden;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .popup-content input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .popup-content button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message-box{
+            display: flex;flex-wrap: nowrap;align-items: flex-start;gap: 8px;
+        }
+
+        .message-item{
+            display: flex;flex-direction: column;flex-wrap: nowrap;align-items: flex-start;gap: 8px;width:100%;
+        }
+        .message-avatar{
+            width:50px;height:50px;float: left;position: relative;object-fit: cover;
+        }
+
+        .inputbox{
+            height: calc(10% - 30px);  max-width: 500px;margin: 0 auto;padding: 20px 20px; display: flex;flex-wrap: nowrap;align-items: center;justify-content: space-between;gap:15px
+        }
+        .inputdiv{
+            height: 40px;width: calc(100% - 50px);
+        }
+        .input{
+            height: 40px;width:calc(100% - 20px);padding: 0px 10px;border-radius: 6px;
+        }
+        .buttondiv{
+            height: 40px;width: 50px;
+        }
+        .button{
+            height: 40px;width:50px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            background-color: #97afda;
+            text-align: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            overflow-wrap: anywhere;
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 50%;
+            border-radius: 50%;
+        }
+
+        .toptips{
+            color: gray;
+            overflow-wrap: anywhere;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
+    </style>
+</head>
+<body>
+    <div id="popup" class="hidden">
+        <div class="popup-content">
+            <div id="roomtips" style="overflow-wrap: anywhere;"></div><br>
+            <input type="text" id="username" placeholder="请输入昵称...">
+            <input type="text" id="password" placeholder="请输入密码...首次创建房间无需填写">
+            <button id="join">Join Room</button>
+        </div>
+    </div>
+    
+    <div class="container" id="messages">
+       
+        <div class="toptips"  id="roomtips1"></div><br>
+    </div>
+    <div id="inputbox"  class="inputbox">
+        <div class="inputdiv">
+            <input type="text" id="message" placeholder="Enter message" class="input" />
+        </div>
+        <div class="buttondiv">
+            <button id="send" class="button">Send</button>
+        </div>
+
+    </div>
+
+    <script>
+
+        let host = "{{.Url}}";
+
+        let ws;
+        let username;
+        let roomNumber;
+        let password;
+
+        roomNumber = getQueryParams().room;
+        if (roomNumber === undefined || roomNumber === "" || roomNumber == null){
+            alert("路径未携带房间号\n自动为你随机创建房间");
+            let currentUrl = window.location.href;
+            let urlWithoutParams = currentUrl.split('?')[0];
+            window.location.href = urlWithoutParams + '?room=' + generateRandomString(8).toLowerCase();
+        }
+
+        document.getElementById('roomtips').innerHTML = "🏠︎ "+window.location.href;
+       
+        const exit = "exit";
+        const join = "join";
+        const chat = "chat";
+
+        // 滚动到div底部的函数
+        function scrollToBottom() {
+            var myDiv = document.getElementById('messages');
+            myDiv.scrollTop = myDiv.scrollHeight;
+        }
+
+        // 获取地址栏参数
+        function getQueryParams() {
+            let queryParams = {};
+            let queryString = window.location.search;
+
+            // 移除查询字符串前面的'?'
+            if (queryString.charAt(0) === '?') {
+                queryString = queryString.substr(1);
+            }
+
+            let params = new URLSearchParams(queryString);
+            params.forEach((value, key) => {
+                queryParams[key] = value;
+            });
+
+            return queryParams;
+        }
+
+        function formatDate(date) {
+          const day = date.getDate().toString().padStart(2, '0');
+          const month = (date.getMonth() + 1).toString().padStart(2, '0');  
+          const year = date.getFullYear();
+          const hours = date.getHours().toString().padStart(2, '0');
+          const minutes = date.getMinutes().toString().padStart(2, '0');
+          const seconds = date.getSeconds().toString().padStart(2, '0');
+         
+          return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        function generateRandomString(length) {
+            let result = '';
+            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let charactersLength = characters.length;
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        document.getElementById('join').onclick = function() {
+
+            const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+            if (host === "" || host === undefined || host === null){
+                host = protocol + window.location.host;
+            }
+            const path = '/ws?';
+
+            roomNumber = getQueryParams().room;
+            username = document.getElementById('username').value;
+            password = document.getElementById('password').value;
+
+            const param = 'username=' + username + '&room_number=' + roomNumber + '&password=' + password + '&cmd=join';
+
+            if (host.charAt(host.length - 1) === '/') {
+                host =  host.slice(0, -1);
+            }
+            ws = new WebSocket(host + path +param);
+            // ws = new WebSocket('ws://localhost:8080/ws/' + channel + '/' + username+ '/' + pwd + '/' + cmd);
+
+            document.getElementById('roomtips1').innerHTML = "🏠︎ "+window.location.href;
+            let first = true;
+            ws.onmessage = function(event) {
+                const messageData = JSON.parse(event.data);
+                if (first){
+                    username = messageData.username;
+                }
+                first = false;
+
+                if (messageData.cmd === "join-pwd-fail"){
+                    document.getElementById('popup').classList.remove('hidden');
+                }
+
+                var newItemBoxDiv = document.createElement("div"); 
+
+                newItemBoxDiv.classList.add("message-box"); 
+                var newItemAvatarDiv = document.createElement("div");
+
+                // var newItemImgDiv = document.createElement("img"); 
+                // newItemImgDiv.src = "";
+                // newItemImgDiv.classList.add("message-avatar"); 
+                // newItemAvatarDiv.appendChild(newItemImgDiv);
+
+                let newItemImgDiv = document.createElement("div");
+                newItemImgDiv.classList.add("avatar"); 
+                newItemImgDiv.innerHTML = messageData.username;
+                newItemAvatarDiv.appendChild(newItemImgDiv);
+
+                let newItemInfoDiv = document.createElement("div");
+                newItemInfoDiv.classList.add("message-item");
+
+                let newItemNameDiv = document.createElement("div");
+                newItemNameDiv.innerHTML = messageData.username + " / " + "<span class='datestamp'>"+ formatDate(new Date()) +"</span>";
+
+                let newItemMessageDiv = document.createElement("div");
+                newItemMessageDiv.classList.add("bubble");
+                if (messageData.cmd === "join"){
+                    newItemMessageDiv.classList.add("yellow");
+                }else if (messageData.cmd === "exit"){
+                    newItemMessageDiv.classList.add("red");
+                }else if (messageData.username === username){
+                    newItemMessageDiv.classList.add("green");
+                }
+
+
+                let newItemMessagePDiv = document.createElement("p");
+
+                newItemMessagePDiv.innerHTML = messageData.payload;
+                newItemMessageDiv.appendChild(newItemMessagePDiv);
+
+                newItemInfoDiv.appendChild(newItemNameDiv);
+                // newItemInfoDiv.appendChild(newItemTimeDiv);
+                newItemInfoDiv.appendChild(newItemMessageDiv);
+
+                newItemBoxDiv.appendChild(newItemAvatarDiv);
+                newItemBoxDiv.appendChild(newItemInfoDiv);
+
+                document.getElementById("messages").appendChild(newItemBoxDiv); 
+
+                scrollToBottom();  
+
+            };
+
+            ws.onopen = function() {
+                console.log("Socket opened");
+            };
+
+            ws.onclose = function() {
+                console.log("Socket closed");
+                ws = null
+            };
+            ws.onerror = function() {
+                console.log("Socket error");
+                ws = null
+            }
+
+            document.getElementById('popup').classList.add('hidden');
+
+
+            let inputElement = document.getElementById('message');
+
+            inputElement.addEventListener('keydown', function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    let message = document.getElementById('message').value;
+                    ws.send(message);
+                    document.getElementById('message').value ="";
+                }
+            });
+        };
+
+        document.getElementById('send').onclick = function() {
+            var message = document.getElementById('message').value;
+            ws.send(message);
+            document.getElementById('message').value ="";
+        };
+
+        document.getElementById('popup').classList.remove('hidden');
+    </script>
+</body>
+</html>
