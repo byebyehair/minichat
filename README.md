@@ -76,7 +76,7 @@ server_url: ""
 ## 其他
 * 如果你需要的是一套支持自部署的完整、强大聊天室系统，请使用 [mattermost.com](https://mattermost.com/)
 * 如果你需要的是一款支持自部署的复古、匿名聊天室系统，请使用 [hack.chat](https://hack.chat/)
-* 如果你需要的是一款支持自部署的手机聊天APP，请使用 [voce.chat](https://voce.chat/)
+* 如果你需要的是一款支持自部署的手机聊天APP，请使用(不保证安全)  [voce.chat](https://voce.chat/)
 * 如果你需要的是一款临时剪贴板，请使用(不保证安全) [netcut.cn](https://netcut.cn/) 
 
 ---
