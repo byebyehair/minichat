@@ -18,13 +18,13 @@ Minichat 是一款极简、极轻、无痕匿名聊天工具，开发此程序�
 
 > 🌟 其实只需要两步：  
 你输入地址进入，输入昵称，开始聊天  
-复制给别人地址，别人进入，输入昵称，开始聊天  
+复制给别人地址，别人进入，输入昵称，开始聊天
 
-1. 进入页面，若地址栏未携带 room=xxx 的参数，将随机产生一个新房间  
-2. 输入自己的昵称(随意)，点击进入房间即可  
-3. 将房间地址复制发送给其他小伙伴，小伙伴输入他自己的昵称(随意)后，将进入你的房间  
-4. 开始愉快且无痕且私密的聊天  
-5. 当所有房间内的人都离开后，房间会立刻销毁  
+1. 进入页面，若地址栏未携带 room=xxx 的参数，将随机产生一个新房间
+2. 输入自己的昵称(随意)，点击进入房间即可
+3. 将房间地址复制发送给其他小伙伴，小伙伴输入他自己的昵称(随意)后，将进入你的房间
+4. 开始愉快且无痕且私密的聊天
+5. 当所有房间内的人都离开后，房间会立刻销毁
 
 
 ## 部署方式
@@ -32,7 +32,7 @@ Minichat 是一款极简、极轻、无痕匿名聊天工具，开发此程序�
 ### Docker compose 方式（推荐｜仅支持 linux-amd64 机器）
 
 1. 环境要求: Git、Docker、Docker-Compose
-2. 克隆项目:   
+2. 克隆项目:
 ```
 git clone https://github.com/okhanyu/minichat
 ```
@@ -69,7 +69,7 @@ docker run -d --name minichattest -p 8080:8080 -v $(pwd)/config.yaml:/app/config
 port: 8080
 server_url: ""
 ```
-5. minichat文件夹内，放置下载好的可执行文件，保证 config.yaml 和 可执行文件在同目录下，双击打开可执行文件即可
+5. minichat文件夹内，放置下载好的[可执行文件](https://github.com/okhanyu/minichat/releases/)，保证 config.yaml 和 可执行文件在同目录下，双击打开可执行文件即可
 5. 成功后，通过ip+端口号访问
 
 ---
@@ -78,9 +78,10 @@ server_url: ""
 * 如果你需要的是一套支持自部署的完整、强大聊天室系统，请使用 [mattermost.com](https://mattermost.com/)
 * 如果你需要的是一款支持自部署的复古、匿名聊天室系统，请使用 [hack.chat](https://hack.chat/)
 * 如果你需要的是一款支持自部署的手机聊天APP，请使用(不保证安全)  [voce.chat](https://voce.chat/)
-* 如果你需要的是一款临时剪贴板，请使用(不保证安全) [netcut.cn](https://netcut.cn/) 
+* 如果你需要的是一款临时剪贴板，请使用(不保证安全) [netcut.cn](https://netcut.cn/)
 
 ---
 
-![](chatdemo1.png)   
-![](chatdemo2.png)  
+![](chatdemo2.png)
+![](chatdemo1.png)
+![](chatdemo3.png)  

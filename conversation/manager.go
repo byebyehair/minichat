@@ -68,7 +68,7 @@ func (manager *ConversationManager) Start() {
 			go func() {
 				names := ""
 				for key, _ := range manager.Rooms[client.RoomNumber].Clients {
-					names += "[" + key.UserName + "], "
+					names += "[ " + key.UserName + " ], "
 				}
 				names = strings.TrimSuffix(names, ", ")
 				manager.broadcast <- Message{
@@ -99,7 +99,7 @@ func (manager *ConversationManager) Start() {
 					for c, _ := range manager.Rooms[client.RoomNumber].Clients {
 						names := ""
 						for key, _ := range manager.Rooms[client.RoomNumber].Clients {
-							names += "[" + key.UserName + "], "
+							names += "[ " + key.UserName + " ], "
 						}
 						names = strings.TrimSuffix(names, ", ")
 						c.Send <- Message{
