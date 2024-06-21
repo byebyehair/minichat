@@ -80,6 +80,9 @@ server_url: ""
 
 ---
 
+## 特别鸣谢
+第二版页面使用[ddiu](https://ddiu.io)制作的样式.
+
 ![](chatdemo2.png)
 ![](chatdemo1.png)
 ![](chatdemo3.png)  
