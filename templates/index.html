@@ -73,6 +73,99 @@
             border-radius: 3px;
         }
 
+        .flex--row-reverse {
+            flex-direction: row-reverse;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .message {
+            border-radius: 20px;
+            padding: 8px 15px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+        .yours {
+            align-items: flex-start;
+        }
+
+        .yours .message {
+            background-color: #e5e5ea;
+            position: relative;
+            margin-left: 8px;
+            color: black;
+        }
+
+        .yours .message.last:before {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            bottom: 0;
+            left: -7px;
+            height: 20px;
+            width: 20px;
+            background: #e5e5ea;
+            border-bottom-right-radius: 15px;
+        }
+        .yours .message.last:after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            left: -10px;
+            width: 10px;
+            height: 20px;
+            background: white;
+            border-bottom-right-radius: 10px;
+        }
+        .dark .yours .message.last:after {
+            background: #212129;
+        }
+
+        .mine {
+            align-items: flex-end;
+        }
+
+        .mine .message {
+            color: white;
+            background: linear-gradient(to bottom, #0085D1 0%, #007aff 100%);
+            background-attachment: fixed;
+            position: relative;
+            margin-right: 8px;
+        }
+
+        .mine .message.last:before {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            bottom: 0;
+            right: -8px;
+            height: 20px;
+            width: 20px;
+            background: linear-gradient(to bottom, #0085D1 0%, #007aff 100%);
+            background-attachment: fixed;
+            border-bottom-left-radius: 15px;
+        }
+
+        .mine .message.last:after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            right: -10px;
+            width: 10px;
+            height: 20px;
+            background: white;
+            border-bottom-left-radius: 10px;
+        }
+        .dark .imne .message.last:after {
+            background: #212129;
+        }
+
     </style>
     <script  src="static/vue.global.js"></script>
 </head>
@@ -133,9 +226,8 @@
         <div data-hk="s00-1-0" class="my-4">
         </div>
         <div class="py-2 -mx-4 px-4 transition-colors md:hover:bg-slate/3" v-for="msg in items">
-            <div class="flex gap-3 rounded-lg op-75">
-                <div class="shrink-0 w-7 h-7 rounded-full op-80 bg-gradient-to-r from-purple-400 to-yellow-400 mt-1 "></div>
-                <div class="message prose break-words overflow-hidden">
+            <div class="flex gap-3 rounded-lg op-75" :class="{ 'flex--row-reverse text-right': msg.username === username }">
+                <div class="prose break-words overflow-hidden">
                     <div class="text-red op-90 text-base">
                         <template v-if="msg.cmd === 'join' || msg.cmd === 'exit'">
                             <strong>( SYSTEM )</strong>
@@ -148,16 +240,18 @@
                     <div class="text-red op-90 text-xs">
                         {[ formatDate(new Date()) ]}
                     </div>
-                    <div>
-                        <template v-if="msg.cmd === 'join'">
-                            <p class="text-red op-90 text-sm" style="margin:0.5rem 0">{[ msg.payload ]}</p>
-                        </template>
-                        <template v-else-if="msg.cmd === 'exit'">
-                            <p class="text-red op-90 text-sm" style="margin:0.5rem 0">{[ msg.payload ]}</p>
-                        </template>
-                        <template v-else>
-                            <p style="margin:0" v-html="msg.payload"></p>
-                        </template>
+                    <div :class="{ 'yours': msg.username !== username, 'mine': msg.username === username }">
+                        <div class="message last">
+                            <template v-if="msg.cmd === 'join'">
+                                <p class="op-90 text-sm" style="margin:0.5rem 0">{[ msg.payload ]}</p>
+                            </template>
+                            <template v-else-if="msg.cmd === 'exit'">
+                                <p class="op-90 text-sm" style="margin:0.5rem 0">{[ msg.payload ]}</p>
+                            </template>
+                            <template v-else>
+                                <p style="margin:0" v-html="msg.payload"></p>
+                            </template>
+                        </div>
                     </div>
 
                 </div>
@@ -247,7 +341,7 @@
             window.location.href = urlWithoutParams + '?room=' + generateRandomString(8).toLowerCase();
         }
 
-        document.getElementById('roomTips').innerHTML = "🏠︎<br> "+window.location.href;
+        document.getElementById('roomTips').innerHTML = "Room Address<br> "+window.location.href;
 
         const exit = "exit";
         const join = "join";
@@ -304,7 +398,7 @@
                     ws = new WebSocket(serverApi + path +param);
                     // ws = new WebSocket('ws://localhost:8080/ws/' + channel + '/' + username+ '/' + pwd + '/' + cmd);
 
-                    that.roomTips = "🏠︎<br>  "+window.location.href;
+                    that.roomTips = "Room Address<br>  "+window.location.href;
 
                     let first = true;
                     ws.onmessage = function(event) {
