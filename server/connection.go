@@ -14,6 +14,7 @@ import (
 	"minichat/util"
 	"net/http"
 	"time"
+	"os"
 )
 
 var (
@@ -249,7 +250,13 @@ func HandleFiles(w http.ResponseWriter, _ *http.Request, dirTemplate fs.FS) {
 		Url: config.GlobalConfig.ServerUrl,
 	}
 
-	tmpl, err := template.ParseFS(dirTemplate, "templates/index.html")
+	tmplName := os.Getenv("TEMPLATE_NAME")
+
+	if tmplName == "" {
+    tmplName = "bulma"
+	}
+
+	tmpl, err := template.ParseFS(dirTemplate, fmt.Sprintf("templates/%s.html", tmplName))
 	if err != nil {
 		fmt.Printf("failed to parse the template: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -258,7 +265,7 @@ func HandleFiles(w http.ResponseWriter, _ *http.Request, dirTemplate fs.FS) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	err = tmpl.ExecuteTemplate(w, "index.html", data)
+	err = tmpl.ExecuteTemplate(w, fmt.Sprintf("%s.html", tmplName), data)
 	if err != nil {
 		fmt.Printf("failed to execute the template: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
