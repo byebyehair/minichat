@@ -68,7 +68,7 @@ docker-compose up -d
 3. 执行（只需修改 -p 8080:8080 中前面的 8080 即可，后面的 8080 代表容器内的端口，要和 config.yaml 中的端口一致，后面默认 8080 即可无需修改）
 ```
 docker pull ghcr.io/alanoy/minichat:latest
-docker run -d --name minichattest -p 8080:8080 -v ./config.yaml:/app/config.yaml okhanyu/minichat:latest
+docker run -d --name minichattest -p 8080:8080 -v ./config.yaml:/app/config.yaml ghcr.io/alanoy/minichat:latest
 ```
 4. 部署成功后，通过ip+端口号访问
 
@@ -77,6 +77,6 @@ docker run -d --name minichattest -p 8080:8080 -v ./config.yaml:/app/config.yaml
 * `TEMPLATE_NAME` 页面模板，支持 `bulma | ddiu`，默认使用 `bulma`
 ---
 
-![](screenshots/EnterRoom.png)
-![](screenshots/ChatView.png)
-![](screenshots/DarkMode.png)
+![](screenshots/EnterRoom.jpeg)
+![](screenshots/ChatView.jpeg)
+![](screenshots/DarkMode.jpeg)
