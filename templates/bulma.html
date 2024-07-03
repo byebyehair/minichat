@@ -88,6 +88,8 @@
             margin-top: 5px;
             margin-bottom: 5px;
             display: inline-block;
+            word-break: break-all;
+            max-width: 80%;
         }
 
         .yours {
@@ -182,13 +184,23 @@
             color: transparent;
         }
 
+        .h-full {
+            height: 100%;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
     </style>
     <script  src="static/vue.global.js"></script>
 </head>
 
 <body>
     <main id="app" class="hero is-fullheight">
-        <div class="hero-body is-justify-content-space-between is-flex-direction-column">
+        <div class="hero-body is-justify-content-space-between is-flex-direction-column h-full" style="overflow: hidden">
+            <div id="overlay" class="is-overlay" style="z-index: 99"></div>
+
             <div id="popup" class="hidden card">
                 <div class="card-content">
                     <div class="content">
@@ -213,7 +225,7 @@
                 </div>
             </div>
 
-            <nav class="navbar is-flex" style="width: 100%">
+            <nav class="navbar is-flex w-full">
                 <div class="navbar-brand">
                     <div class="navbar-item">
                         <h1 class="title app-title">MiniChat</h1>
@@ -244,63 +256,64 @@
                 </div>
             </nav>
 
-            <div class="content mt-6" v-show="roomTips != ''" style="width: 100%">
-                <div v-html="roomTips" class="notification"></div>
-            </div>
+            <div id="message-wrapper" class="h-full w-full" style="overflow-y: auto; overflow-x: hidden">
+                <div class="content mt-5 w-full" v-show="roomTips != ''">
+                    <div v-html="roomTips" class="notification"></div>
+                </div>
 
-            <div class="is-flex-grow-1 is-flex is-flex-direction-column" style="width: 100%; position: relative">
-                <div id="overlay" class="is-overlay" style="z-index: 99"></div>
-                <div id="messages" class="is-flex-grow-1">
-                    <div class="message" v-for="msg in items" :class="{ 'has-text-right': msg.username === username }">
-                        <div class="is-size-6 has-text-grey has-text-weight-medium">
-                            <template v-if="msg.cmd === 'join' || msg.cmd === 'exit'">
-                                ( SYSTEM )
-                            </template>
-                            <template v-else-if="msg.username !== username">
-                                {[ msg.username === username  ? '( ME ) ':'' ]} {[ msg.username ]}
-                            </template>
-                        </div>
-                        <div class="is-size-7 has-text-grey-light">
-                            {[ formatDate(new Date()) ]}
-                        </div>
+                <div class="is-flex-grow-1 is-flex is-flex-direction-column w-full">
+                    <div id="messages" class="is-flex-grow-1">
+                        <div class="message" v-for="msg in items" :class="{ 'has-text-right': msg.username === username }">
+                            <div class="is-size-6 has-text-grey has-text-weight-medium">
+                                <template v-if="msg.cmd === 'join' || msg.cmd === 'exit'">
+                                    ( SYSTEM )
+                                </template>
+                                <template v-else-if="msg.username !== username">
+                                    {[ msg.username === username  ? '( ME ) ':'' ]} {[ msg.username ]}
+                                </template>
+                            </div>
+                            <div class="is-size-7 has-text-grey-light">
+                                {[ formatDate(new Date()) ]}
+                            </div>
 
-                        <div :class="{ 'yours': msg.username !== username, 'mine': msg.username === username }">
-                            <div class="msg-item last">
-                                <template v-if="msg.cmd === 'join'">
-                                    <p class="">{[ msg.payload ]}</p>
-                                </template>
-                                <template v-else-if="msg.cmd === 'exit'">
-                                    <p class="">{[ msg.payload ]}</p>
-                                </template>
-                                <template v-else>
-                                    <p v-html="msg.payload"></p>
-                                </template>
+                            <div :class="{ 'yours': msg.username !== username, 'mine': msg.username === username }">
+                                <div class="msg-item last">
+                                    <template v-if="msg.cmd === 'join'">
+                                        <p class="">{[ msg.payload ]}</p>
+                                    </template>
+                                    <template v-else-if="msg.cmd === 'exit'">
+                                        <p class="">{[ msg.payload ]}</p>
+                                    </template>
+                                    <template v-else>
+                                        <p v-html="msg.payload"></p>
+                                    </template>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="field is-grouped mt-5">
-                    <div class="control is-expanded field has-addons">
-                        <p class="control is-expanded">
-                            <textarea id="message" placeholder="Enter something..." autocomplete="off" autofocus="" rows="1" class="input"></textarea>
-                        </p>
-                        <p class="control">
-                            <button id="send"  @click="send" class="button is-link">Send</button>
-                        </p>
-                    </div>
-
-                    <p class="control">
-                        <button @click="clearScreen" title="Clear" class="button is-warning is-light is-medium">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="currentColor" d="M8 20v-5h2v5h9v-7H5v7h3zm-4-9h16V8h-6V4h-4v4H4v3zM3 21v-8H2V7a1 1 0 0 1 1-1h5V3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3h5a1 1 0 0 1 1 1v6h-1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path>
-                            </svg>
-                        </button>
-                    </p>
-                </div>
             </div>
 
-            <footer class="content pt-6 has-text-grey-light" style="width: 100%">
+            <div class="field is-grouped mt-5 w-full">
+                <div class="control is-expanded field has-addons">
+                    <p class="control is-expanded">
+                        <textarea id="message" placeholder="Enter something..." autocomplete="off" autofocus="" rows="1" class="input"></textarea>
+                    </p>
+                    <p class="control">
+                        <button id="send"  @click="send" class="button is-link">Send</button>
+                    </p>
+                </div>
+
+                <p class="control">
+                    <button @click="clearScreen" title="Clear" class="button is-warning is-light is-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M8 20v-5h2v5h9v-7H5v7h3zm-4-9h16V8h-6V4h-4v4H4v3zM3 21v-8H2V7a1 1 0 0 1 1-1h5V3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3h5a1 1 0 0 1 1 1v6h-1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path>
+                        </svg>
+                    </button>
+                </p>
+            </div>
+
+            <footer class="content has-text-grey-light" style="width: 100%">
                 <p>
                     Style by
                     <a href="https://ideapart.com" target="_blank">@alanoy</a>
@@ -321,8 +334,10 @@
 
         // 滚动到div底部的函数
         function scrollToBottom() {
-            var myDiv = document.getElementById('messages');
-            myDiv.scrollTop = myDiv.scrollHeight;
+            // var myDiv = document.getElementById('messages');
+            // myDiv.scrollTop = myDiv.scrollHeight;
+            var messageWrapper = document.getElementById('message-wrapper');
+            messageWrapper.scrollTop = messageWrapper.scrollHeight;
         }
 
         // 获取地址栏参数
@@ -524,6 +539,7 @@
                         alert("The connection is closed, please refresh the page to reconnect！");
                         return;
                     }
+
                     ws.send(message);
                     document.getElementById('message').value ="";
                 },
