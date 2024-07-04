@@ -2,6 +2,8 @@
 
 Minichat 是一款Go语言实现的极简、极轻、无痕匿名聊天工具，开发此程序的本意是用于自己平日与好友临时讨论敏感话题时使用，现开源共享，代码简陋，请多包涵。
 
+**如有兴致，还请赏个 github 的 Star .**
+
 ## 特性
 
 * 无数据库、无多余组件、打包后镜像仅 16M
@@ -50,7 +52,7 @@ EOF
 1. 环境要求: Docker、Docker-Compose
 2. 创建目录并下载 docker-compose.yaml:
 ```
-wget https://raw.githubusercontent.com/alanoy/minichat/master/docker-compose.yml
+wget https://raw.githubusercontent.com/okhanyu/minichat/master/docker-compose.yml
 ```
 3. 修改 docker-compose.yml 文件，按需修改端口号（只需修改 docker-compose.yml 文件中 - "8080:8080" 中前面的8080即可，后面的 8080 代表容器内的端口要和 config.yaml 中的端口一致，后面默认 8080 即可无需修改）
 4. 如有特殊需要，修改 config.yaml 文件，页面请求服务器的接口地址 server_url，如页面和服务使用同域名同端口，server_url 留空无需修改即可
@@ -66,14 +68,26 @@ docker-compose up -d
 2. 如有特殊需要，修改 config.yaml 文件，修改页面请求服务器的接口地址 server_url，如页面和服务使用同域名同端口，server_url 留空无需修改即可
 3. 执行（只需修改 -p 8080:8080 中前面的 8080 即可，后面的 8080 代表容器内的端口，要和 config.yaml 中的端口一致，后面默认 8080 即可无需修改）
 ```
-docker pull ghcr.io/alanoy/minichat:latest
+docker pull okhanyu/minichat:latest
 docker run -d --name minichattest --restart always \
   -p 8080:8080 \
   -v ./config.yaml:/app/config.yaml \
   -e TEMPLATE_NAME="bulma" \
-  ghcr.io/alanoy/minichat:latest
+  okhanyu/minichat:latest
 ```
 4. 部署成功后，通过ip+端口号访问
+
+### 二进制直接运行 方式（无需 Docker）
+
+1. 环境要求: 无
+2. minichat 文件夹内创建文件 config.yaml
+3. 修改 config.yaml 文件，按需修改端口号和页面请求服务器的接口地址 server_url，如页面和服务使用同域名同端口，server_url 留空即可
+```
+port: 8080
+server_url: ""
+```
+4. minichat 文件夹内，放置下载并解压好的[可执行文件](https://github.com/okhanyu/minichat/releases/)，保证 config.yaml 和 可执行文件在同目录下，双击打开可执行文件即可
+5. 成功后，通过ip+端口号访问
 
 ### 环境变量
 
