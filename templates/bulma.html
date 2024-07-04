@@ -17,21 +17,8 @@
         #app {
             margin: 0 auto;
             max-width: 768px;
-        }
-
-        #popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
+            max-height: 100vh;
             overflow: hidden;
-            max-width: 400px;
-            width: 96%;
-        }
-
-        .hidden {
-            display: none;
         }
 
         html,body,main {
@@ -88,85 +75,86 @@
             margin-top: 5px;
             margin-bottom: 5px;
             display: inline-block;
-            word-break: break-all;
+            word-break: break-word;
             max-width: 80%;
+            position: relative;
+            --msg-h: var(--bulma-scheme-h);
+            --msg-s: var(--bulma-scheme-s);
+            --msg-background-l: var(--bulma-background-l);
+            --msg-color-l: var(--bulma-text-strong-l);
+            --msg-background-color: var(--bulma-scheme-main);
+            background-color: hsl(var(--msg-h), var(--msg-s), var(--msg-background-l));
+            color: hsl(var(--msg-h),var(--msg-s),var(--msg-color-l));
         }
 
-        .yours {
+        .msg-item.last:before,
+        .msg-item.last:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 20px;
+        }
+
+        .msg-item.last:before {
+            z-index: 0;
+            width: 20px;
+            background-color: hsl(var(--msg-h), var(--msg-s), var(--msg-background-l));
+        }
+
+        .msg-item.last:after {
+            z-index: 1;
+            width: 10px;
+            background-color: white;
+        }
+
+        .theme-dark .msg-item.last:after {
+            background-color: var(--bulma-scheme-main);
+        }
+
+        .received {
             align-items: flex-start;
         }
 
-        .yours .msg-item {
-            background-color: #e5e5ea;
-            position: relative;
+        .received .msg-item {
             margin-left: 8px;
-            color: black;
         }
 
-        .yours .msg-item:before,
-        .yours .msg-item:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            height: 20px;
-        }
-
-        .yours .msg-item.last:before {
-            z-index: 0;
+        .received .msg-item.last:before {
             left: -7px;
-            width: 20px;
-            background-color: #e5e5ea;
             border-bottom-right-radius: 15px;
         }
-        .yours .msg-item.last:after {
-            z-index: 1;
+        .received .msg-item.last:after {
             left: -10px;
-            width: 10px;
-            background-color: white;
             border-bottom-right-radius: 10px;
         }
-        .theme-dark .yours .msg-item.last:after {
-            background-color: var(--bulma-scheme-main);
-        }
 
-        .mine {
+        .sended {
             align-items: flex-end;
         }
 
-        .mine .msg-item {
-            color: white;
-            background-color: #0E63FF;
-            background-attachment: fixed;
-            position: relative;
+        .sended .msg-item {
+            --msg-h: var(--bulma-link-h);
+            --msg-s: var(--bulma-link-s);
+            --msg-background-l: var(--bulma-link-l);
+            --msg-color-l: var(--bulma-link-invert-l);
             margin-right: 8px;
         }
 
-        .mine .msg-item:before,
-        .mine .msg-item:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            height: 20px;
-        }
-
-        .mine .msg-item.last:before {
-            z-index: 0;
+        .sended .msg-item.last:before {
             right: -8px;
-            width: 20px;
-            background-color: #0E63FF;
-            background-attachment: fixed;
             border-bottom-left-radius: 15px;
         }
 
-        .mine .msg-item.last:after {
-            z-index: 1;
+        .sended .msg-item.last:after {
             right: -10px;
-            width: 10px;
-            background-color: white;
             border-bottom-left-radius: 10px;
         }
-        .theme-dark .mine .msg-item.last:after {
-            background-color: var(--bulma-scheme-main);
+
+        .system .msg-item {
+            --msg-h: var(--bulma-info-h);
+            --msg-s: var(--bulma-info-s);
+            --msg-background-l: var(--bulma-info-l);
+            --msg-color-l: var(--bulma-info-invert-l);
         }
 
         .app-title {
@@ -191,41 +179,14 @@
         .w-full {
             width: 100%;
         }
-
     </style>
     <script  src="static/vue.global.js"></script>
 </head>
 
 <body>
-    <main id="app" class="hero is-fullheight">
-        <div class="hero-body is-justify-content-space-between is-flex-direction-column h-full" style="overflow: hidden">
-            <div id="overlay" class="is-overlay" style="z-index: 99"></div>
-
-            <div id="popup" class="hidden card">
-                <div class="card-content">
-                    <div class="content">
-                        <div id="roomTips" style="overflow-wrap: anywhere;" class="notification">
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <input class="input" type="text" id="username" placeholder="Enter Name...">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <input class="input" type="text" id="password" placeholder="Password or Empty">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button id="join" class="button is-link">Enter</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <nav class="navbar is-flex w-full">
+    <main id="app" class="hero is-fullheight is-flex is-flex-direction-column">
+        <div class="hero-head">
+            <nav class="navbar is-flex px-5 pt-5">
                 <div class="navbar-brand">
                     <div class="navbar-item">
                         <h1 class="title app-title">MiniChat</h1>
@@ -255,46 +216,44 @@
                     </div>
                 </div>
             </nav>
+        </div>
 
-            <div id="message-wrapper" class="h-full w-full" style="overflow-y: auto; overflow-x: hidden">
-                <div class="content mt-5 w-full" v-show="roomTips != ''">
-                    <div v-html="roomTips" class="notification"></div>
-                </div>
+        <div class="hero-body is-flex-shrink-1 py-3 my-2" style="overflow: hidden auto" id="message-wrapper">
+            <div class="is-flex is-flex-direction-column h-full w-full">
+                <div id="messages" class="is-flex-grow-1">
+                    <div
+                        class="message"
+                        v-for="msg in items"
+                        :class="{ 'has-text-right': !(msg.cmd === 'join' || msg.cmd === 'exit') && msg.username === username }"
+                    >
+                        <div class="is-size-6 has-text-grey has-text-weight-medium">
+                            <template v-if="msg.cmd === 'join' || msg.cmd === 'exit'">
+                                ( SYSTEM )
+                            </template>
+                            <template v-else-if="msg.username !== username">
+                                {[ msg.username === username  ? '( ME ) ':'' ]} {[ msg.username ]}
+                            </template>
+                        </div>
+                        <div class="is-size-7 has-text-grey-light">
+                            {[ formatDate(new Date()) ]}
+                        </div>
 
-                <div class="is-flex-grow-1 is-flex is-flex-direction-column w-full">
-                    <div id="messages" class="is-flex-grow-1">
-                        <div class="message" v-for="msg in items" :class="{ 'has-text-right': msg.username === username }">
-                            <div class="is-size-6 has-text-grey has-text-weight-medium">
-                                <template v-if="msg.cmd === 'join' || msg.cmd === 'exit'">
-                                    ( SYSTEM )
-                                </template>
-                                <template v-else-if="msg.username !== username">
-                                    {[ msg.username === username  ? '( ME ) ':'' ]} {[ msg.username ]}
-                                </template>
-                            </div>
-                            <div class="is-size-7 has-text-grey-light">
-                                {[ formatDate(new Date()) ]}
-                            </div>
-
-                            <div :class="{ 'yours': msg.username !== username, 'mine': msg.username === username }">
-                                <div class="msg-item last">
-                                    <template v-if="msg.cmd === 'join'">
-                                        <p class="">{[ msg.payload ]}</p>
-                                    </template>
-                                    <template v-else-if="msg.cmd === 'exit'">
-                                        <p class="">{[ msg.payload ]}</p>
-                                    </template>
-                                    <template v-else>
-                                        <p v-html="msg.payload"></p>
-                                    </template>
-                                </div>
+                        <div :class="{
+                            received: msg.cmd === 'join' || msg.cmd === 'exit' || msg.username !== username,
+                            sended: !(msg.cmd === 'join' || msg.cmd === 'exit') && msg.username === username,
+                            system: msg.cmd === 'join' || msg.cmd === 'exit'
+                        }">
+                            <div class="msg-item last">
+                                <p v-html="msg.payload"></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="field is-grouped mt-5 w-full">
+        <div class="hero-footer px-5">
+            <div class="field is-grouped">
                 <div class="control is-expanded field has-addons">
                     <p class="control is-expanded">
                         <textarea id="message" placeholder="Enter something..." autocomplete="off" autofocus="" rows="1" class="input"></textarea>
@@ -313,7 +272,7 @@
                 </p>
             </div>
 
-            <footer class="content has-text-grey-light" style="width: 100%">
+            <footer class="content has-text-grey-light pb-5">
                 <p>
                     Style by
                     <a href="https://ideapart.com" target="_blank">@alanoy</a>
@@ -324,6 +283,34 @@
             </footer>
         </div>
     </main>
+
+    <div class="modal" id="popup">
+        <div class="modal-background"></div>
+        <div class="modal-card" style="max-width: 90%">
+            <header class="modal-card-head py-5">
+                <p class="modal-card-title">Enter Room</p>
+            </header>
+            <section class="modal-card-body py-5">
+                <div id="roomTips" style="overflow-wrap: anywhere;" class="notification">
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" id="username" placeholder="Enter Name...">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" id="password" placeholder="Password or Empty">
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot py-5">
+                <div class="buttons">
+                    <button id="join" class="button is-link">Enter</button>
+                </div>
+            </footer>
+        </div>
+    </div>
 
     <script>
         let host = "{{.Url}}";
@@ -456,7 +443,7 @@
                             first = false;
 
                             if (messageData.cmd === "join-pwd-fail"){
-                                document.getElementById('popup').classList.remove('hidden');
+                                document.getElementById('popup').classList.add('is-active');
                             }
 
                             that.items.push(messageData);
@@ -480,8 +467,7 @@
                             ws = null
                         }
 
-                        document.getElementById('popup').classList.add('hidden');
-                        document.getElementById('overlay').classList.add('hidden');
+                        document.getElementById('popup').classList.remove('is-active');
 
                         let inputElement = document.getElementById('message');
 
@@ -505,13 +491,7 @@
                     });
             };
 
-            // document.getElementById('send').onclick = function() {
-            //     var message = document.getElementById('message').value;
-            //     ws.send(message);
-            //     document.getElementById('message').value ="";
-            // };
-
-            document.getElementById('popup').classList.remove('hidden');
+            document.getElementById('popup').classList.add('is-active');
         }
     </script>
 
