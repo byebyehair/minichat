@@ -2,6 +2,8 @@
 
 Minichat 是一款Go语言实现的极简、极轻、无痕匿名聊天工具，开发此程序的本意是用于自己平日与好友临时讨论敏感话题时使用，现开源共享，代码简陋，请多包涵。
 
+**如有兴致，还请赏个 github 的 Star .**
+
 ## 特性
 
 * 无数据库、无多余组件、打包后镜像仅 16M
@@ -76,9 +78,30 @@ docker run -d --name minichattest --restart always \
 ```
 4. 部署成功后，通过ip+端口号访问
 
+### 二进制直接运行 方式（无需 Docker）
+
+1. 环境要求: 无
+2. minichat 文件夹内创建文件 config.yaml
+3. 修改 config.yaml 文件，按需修改端口号和页面请求服务器的接口地址 server_url，如页面和服务使用同域名同端口，server_url 留空即可
+```
+port: 8080
+server_url: ""
+```
+4. minichat 文件夹内，放置下载并解压好的[可执行文件](https://github.com/okhanyu/minichat/releases/)，保证 config.yaml 和 可执行文件在同目录下，双击打开可执行文件即可
+5. 成功后，通过ip+端口号访问
+
 ### 环境变量
 
 * `TEMPLATE_NAME` 页面模板，支持 `bulma | ddiu`，默认使用 `bulma`
+
+## 其他
+* 如果你需要的是一套支持自部署的完整、强大聊天室系统，请使用 [mattermost.com](https://mattermost.com/)
+* 如果你需要的是一款支持自部署的复古、匿名聊天室系统，请使用 [hack.chat](https://hack.chat/)
+
+## 模板作者
+
+* ddiu by [ddiu8081](https://ddiu.io)
+* bulma by [@alanoy](https://ideapart.com)
 ---
 
 ![](screenshots/EnterRoom.jpeg)
