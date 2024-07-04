@@ -2,7 +2,7 @@ version: "3"
 
 services:
   server:
-    image: ghcr.io/alanoy/minichat:latest
+    image: okhanyu/minichat:latest
     container_name: minichat
     restart: always
     ports:
