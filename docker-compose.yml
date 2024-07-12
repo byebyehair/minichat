@@ -8,4 +8,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - "$PWD/config.yaml:/app/config.yaml"
+      - "./config.yaml:/app/config.yaml"
+    environment:
+      - TEMPLATE_NAME=bulma

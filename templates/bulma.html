@@ -1,0 +1,566 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E😂%3C/text%3E%3C/svg%3E">
+    <link rel="shortcut icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E😂%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E😂%3C/text%3E%3C/svg%3E" sizes="180x180">
+    <meta name="theme-color" content="#212129">
+    <title>MiniChat</title>
+    <meta name="description" content="Minichat">
+    <link href="static/bulma.min.css" rel="stylesheet">
+
+    <style type="text/css">
+
+        #app {
+            margin: 0 auto;
+            max-width: 768px;
+            max-height: 100vh;
+            overflow: hidden;
+        }
+
+        html,body,main {
+            height: 100%;
+        }
+
+        .transition {
+            transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(.4,0,.2,1);
+            transition-duration: .15s;
+        }
+
+        #themeToggle:where(.astro-KXYEDVG6) {
+            border: 0;
+            cursor: pointer
+        }
+
+        .theme_toggle_circle1:where(.astro-KXYEDVG6) {
+            transition: cx .5s,cy .5s;
+            cx: 100%;
+            cy: 0%
+        }
+
+        .theme_toggle_circle2:where(.astro-KXYEDVG6) {
+            transition: r .3s
+        }
+
+        .theme_toggle_svg:where(.astro-KXYEDVG6) {
+            transition: transform .5s cubic-bezier(.68,-.55,.27,1.55);
+            transform: rotate(90deg)
+        }
+
+        .theme_toggle_g:where(.astro-KXYEDVG6) {
+            transition: opacity .5s;
+            opacity: 1
+        }
+
+        .theme-dark .theme_toggle_circle1:where(.astro-KXYEDVG6) {
+            cx: 50%;
+            cy: 23%
+        }
+
+        .theme-dark .theme_toggle_svg:where(.astro-KXYEDVG6) {
+            transform: rotate(40deg)
+        }
+
+        .theme-dark .theme_toggle_g:where(.astro-KXYEDVG6) {
+            opacity: 0
+        }
+
+        .msg-item {
+            border-radius: 20px;
+            padding: 8px 15px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+            word-break: break-word;
+            max-width: 80%;
+            position: relative;
+            --msg-h: var(--bulma-scheme-h);
+            --msg-s: var(--bulma-scheme-s);
+            --msg-background-l: var(--bulma-background-l);
+            --msg-color-l: var(--bulma-text-strong-l);
+            --msg-background-color: var(--bulma-scheme-main);
+            background-color: hsl(var(--msg-h), var(--msg-s), var(--msg-background-l));
+            color: hsl(var(--msg-h),var(--msg-s),var(--msg-color-l));
+        }
+
+        .msg-item.last:before,
+        .msg-item.last:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 20px;
+        }
+
+        .msg-item.last:before {
+            z-index: 0;
+            width: 20px;
+            background-color: hsl(var(--msg-h), var(--msg-s), var(--msg-background-l));
+        }
+
+        .msg-item.last:after {
+            z-index: 1;
+            width: 10px;
+            background-color: white;
+        }
+
+        .theme-dark .msg-item.last:after {
+            background-color: var(--bulma-scheme-main);
+        }
+
+        .received {
+            align-items: flex-start;
+        }
+
+        .received .msg-item {
+            margin-left: 8px;
+        }
+
+        .received .msg-item.last:before {
+            left: -7px;
+            border-bottom-right-radius: 15px;
+        }
+        .received .msg-item.last:after {
+            left: -10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .sended {
+            align-items: flex-end;
+        }
+
+        .sended .msg-item {
+            --msg-h: var(--bulma-link-h);
+            --msg-s: var(--bulma-link-s);
+            --msg-background-l: var(--bulma-link-l);
+            --msg-color-l: var(--bulma-link-invert-l);
+            margin-right: 8px;
+        }
+
+        .sended .msg-item.last:before {
+            right: -8px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .sended .msg-item.last:after {
+            right: -10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .system .msg-item {
+            --msg-h: var(--bulma-info-h);
+            --msg-s: var(--bulma-info-s);
+            --msg-background-l: var(--bulma-info-l);
+            --msg-color-l: var(--bulma-info-invert-l);
+        }
+
+        .app-title {
+            --un-gradient-from-position: 0%;
+            --un-gradient-from: var(--bulma-primary) var(--un-gradient-from-position);
+            --un-gradient-to: rgba(56,189,248,0) var(--un-gradient-to-position);
+            --un-gradient-stops: var(--un-gradient-from), var(--un-gradient-to);
+            --un-gradient-to-position: 100%;
+            --un-gradient-to: var(--bulma-link) var(--un-gradient-to-position);
+            --un-gradient-shape: to right;
+            --un-gradient: var(--un-gradient-shape), var(--un-gradient-stops);
+            background-image: linear-gradient(var(--un-gradient));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .h-full {
+            height: 100%;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+    </style>
+    <script  src="static/vue.global.js"></script>
+</head>
+
+<body>
+    <main id="app" class="hero is-fullheight is-flex is-flex-direction-column">
+        <div class="hero-head">
+            <nav class="navbar is-flex px-5 pt-5">
+                <div class="navbar-brand">
+                    <div class="navbar-item">
+                        <h1 class="title app-title">MiniChat</h1>
+                    </div>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div id="themeToggle" class="button is-ghost transition">
+                            <svg class="theme_toggle_svg astro-KXYEDVG6" width="1.2em" height="1.2em" viewBox="0 0 24 24" color="#858585" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor">
+                                <mask id="myMask" class="astro-KXYEDVG6">
+                                    <rect x="0" y="0" width="100%" height="100%" fill="white" class="astro-KXYEDVG6"></rect>
+                                    <circle class="theme_toggle_circle1 astro-KXYEDVG6" fill="black" cx="100%" cy="0%" r="5"></circle>
+                                </mask>
+                                <circle class="theme_toggle_circle2 astro-KXYEDVG6" cx="12" cy="12" fill="#858585" mask="url(#myMask)" r="5"></circle>
+                                <g class="theme_toggle_g astro-KXYEDVG6" stroke="currentColor" opacity="1">
+                                    <line x1="12" y1="1" x2="12" y2="3" class="astro-KXYEDVG6"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23" class="astro-KXYEDVG6"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" class="astro-KXYEDVG6"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" class="astro-KXYEDVG6"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12" class="astro-KXYEDVG6"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12" class="astro-KXYEDVG6"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" class="astro-KXYEDVG6"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" class="astro-KXYEDVG6"></line>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="hero-body is-flex-shrink-1 py-3 my-2" style="overflow: hidden auto" id="message-wrapper">
+            <div class="is-flex is-flex-direction-column h-full w-full">
+                <div id="messages" class="is-flex-grow-1">
+                    <div
+                        class="message"
+                        v-for="msg in items"
+                        :class="{ 'has-text-right': !(msg.cmd === 'join' || msg.cmd === 'exit') && msg.username === username }"
+                    >
+                        <div class="is-size-6 has-text-grey has-text-weight-medium">
+                            <template v-if="msg.cmd === 'join' || msg.cmd === 'exit'">
+                                ( SYSTEM )
+                            </template>
+                            <template v-else-if="msg.username !== username">
+                                {[ msg.username === username  ? '( ME ) ':'' ]} {[ msg.username ]}
+                            </template>
+                        </div>
+                        <div class="is-size-7 has-text-grey-light">
+                            {[ formatDate(new Date()) ]}
+                        </div>
+
+                        <div :class="{
+                            received: msg.cmd === 'join' || msg.cmd === 'exit' || msg.username !== username,
+                            sended: !(msg.cmd === 'join' || msg.cmd === 'exit') && msg.username === username,
+                            system: msg.cmd === 'join' || msg.cmd === 'exit'
+                        }">
+                            <div class="msg-item last">
+                                <p v-html="msg.payload"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-footer px-5">
+            <div class="field is-grouped">
+                <div class="control is-expanded field has-addons">
+                    <p class="control is-expanded">
+                        <textarea id="message" placeholder="Enter something..." autocomplete="off" autofocus="" rows="1" class="input"></textarea>
+                    </p>
+                    <p class="control">
+                        <button id="send"  @click="send" class="button is-link">Send</button>
+                    </p>
+                </div>
+
+                <p class="control">
+                    <button @click="clearScreen" title="Clear" class="button is-warning is-light is-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M8 20v-5h2v5h9v-7H5v7h3zm-4-9h16V8h-6V4h-4v4H4v3zM3 21v-8H2V7a1 1 0 0 1 1-1h5V3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3h5a1 1 0 0 1 1 1v6h-1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path>
+                        </svg>
+                    </button>
+                </p>
+            </div>
+
+            <footer class="content has-text-grey-light pb-5">
+                <p>
+                    Style by
+                    <a href="https://ideapart.com" target="_blank">@alanoy</a>
+                    <span class="px-1">|</span>
+                    Server by
+                    <a href="https://lion.im/" target="_blank">Han</a>
+                </p>
+            </footer>
+        </div>
+    </main>
+
+    <div class="modal" id="popup">
+        <div class="modal-background"></div>
+        <div class="modal-card" style="max-width: 90%">
+            <header class="modal-card-head py-5">
+                <p class="modal-card-title">Enter Room</p>
+            </header>
+            <section class="modal-card-body py-5">
+                <div id="roomTips" style="overflow-wrap: anywhere;" class="notification">
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" id="username" placeholder="Enter Name...">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <input class="input" type="text" id="password" placeholder="Password or Empty">
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot py-5">
+                <div class="buttons">
+                    <button id="join" class="button is-link">Enter</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        let host = "{{.Url}}";
+        let ws;
+        let username;
+        let roomNumber;
+        let password;
+
+        // 滚动到div底部的函数
+        function scrollToBottom() {
+            // var myDiv = document.getElementById('messages');
+            // myDiv.scrollTop = myDiv.scrollHeight;
+            var messageWrapper = document.getElementById('message-wrapper');
+            messageWrapper.scrollTop = messageWrapper.scrollHeight;
+        }
+
+        // 获取地址栏参数
+        function getQueryParams() {
+            let queryParams = {};
+            let queryString = window.location.search;
+
+            // 移除查询字符串前面的'?'
+            if (queryString.charAt(0) === '?') {
+                queryString = queryString.substr(1);
+            }
+
+            let params = new URLSearchParams(queryString);
+            params.forEach((value, key) => {
+                queryParams[key] = value;
+            });
+
+            return queryParams;
+        }
+
+        function format(date) {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            const seconds = date.getSeconds().toString().padStart(2, '0');
+
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        function generateRandomString(length) {
+            let result = '';
+            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let charactersLength = characters.length;
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        function init(that){
+            roomNumber = getQueryParams().room;
+            if (roomNumber === undefined || roomNumber === "" || roomNumber == null){
+                let currentUrl = window.location.href;
+                let urlWithoutParams = currentUrl.split('?')[0];
+                window.location.href = urlWithoutParams + '?room=' + generateRandomString(8).toLowerCase();
+            }
+
+            document.getElementById('roomTips').innerHTML = "Room Address<br> "+window.location.href;
+
+            const exit = "exit";
+            const join = "join";
+            const chat = "chat";
+
+            document.getElementById('join').onclick = function() {
+                roomNumber = getQueryParams().room;
+                username = document.getElementById('username').value;
+                password = document.getElementById('password').value;
+
+                var serverApi = window.location.protocol + '//'+ host;
+                if (host === "" || host === undefined || host === null){
+                    serverApi =  window.location.protocol + '//'+ window.location.host
+                }
+
+                const data = { 'room_number': roomNumber, 'username': username , 'password': password };
+
+                var url = serverApi +'/precheck';
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        if (data.code !== 10000){
+                            alert(data.info);
+                            return;
+                        }
+
+                        const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+                        if (host === "" || host === undefined || host === null){
+                            serverApi = protocol + window.location.host;
+                        }else{
+                            serverApi = protocol + host;
+                        }
+                        const path = '/ws?';
+
+                        const param = 'username=' + username + '&room_number=' + roomNumber + '&password=' + password + '&cmd=join'+ '&once_token=' + data.data;
+
+                        if (serverApi.charAt(serverApi.length - 1) === '/') {
+                            serverApi =  serverApi.slice(0, -1);
+                        }
+                        ws = new WebSocket(serverApi + path +param);
+                        // ws = new WebSocket('ws://localhost:8080/ws/' + channel + '/' + username+ '/' + pwd + '/' + cmd);
+
+                        that.roomTips = "Room Address<br>  "+window.location.href;
+
+                        let first = true;
+                        ws.onmessage = function(event) {
+                            const messageData = JSON.parse(event.data);
+                            if (first){
+                                username = messageData.username;
+                                that.username = messageData.username;
+                            }
+                            first = false;
+
+                            if (messageData.cmd === "join-pwd-fail"){
+                                document.getElementById('popup').classList.add('is-active');
+                            }
+
+                            that.items.push(messageData);
+
+                            that.$nextTick(function() {
+                                scrollToBottom();
+                            }.bind(that));
+
+                        };
+
+                        ws.onopen = function() {
+                            console.log("Socket opened");
+                        };
+
+                        ws.onclose = function() {
+                            console.log("Socket closed");
+                            ws = null
+                        };
+                        ws.onerror = function() {
+                            console.log("Socket error");
+                            ws = null
+                        }
+
+                        document.getElementById('popup').classList.remove('is-active');
+
+                        let inputElement = document.getElementById('message');
+
+                        inputElement.addEventListener('keydown', function(event) {
+                            if (event.keyCode === 13) {
+                                event.preventDefault();
+                                let message = document.getElementById('message').value;
+                                if (ws === null || ws === undefined || ws === "" ) {
+                                    alert("The connection is closed, please refresh the page to reconnect！");
+                                        return;
+                                }
+                                ws.send(message);
+                                document.getElementById('message').value ="";
+                            }
+                        });
+
+
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your fetch operation:', error);
+                    });
+            };
+
+            document.getElementById('popup').classList.add('is-active');
+        }
+    </script>
+
+    <script type="text/javascript">
+        const {
+            createApp
+        } = Vue;
+
+        const app = createApp({
+            delimiters: ['{[', ']}'],
+            data() {
+                return {
+                    items: [],
+                    roomTips:"",
+                    username:"",
+                }
+            },
+            computed: {
+
+            },
+            methods: {
+                send (){
+                    var message = document.getElementById('message').value;
+                    if (ws === null || ws === undefined || ws === "" ) {
+                        alert("The connection is closed, please refresh the page to reconnect！");
+                        return;
+                    }
+
+                    ws.send(message);
+                    document.getElementById('message').value ="";
+                },
+                clearScreen(){
+                    this.items = [];
+                },
+                formatDate(value) {
+                    return format(value, "yyyy-MM-dd HH:mm:ss");
+                }
+            },
+            mounted: function() {
+
+                const that = this;
+                init(that);
+            }
+        });
+
+        const vm = app.mount('#app');
+    </script>
+
+    <script type="text/javascript">
+        // 假设你要切换class的元素是<body>
+        // const body = document.getElementsByTagName("html");
+        const themeToggle = document.getElementById('themeToggle');
+
+        // 读取localStorage中的主题状态
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            // 如果localStorage中有主题状态，则应用它
+            document.documentElement.classList.toggle('theme-dark', savedTheme === 'theme-dark');
+        }
+
+        // 为themeToggle元素添加点击事件监听器
+        themeToggle.addEventListener('click', function() {
+            // 切换body的dark类
+            document.documentElement.classList.toggle("theme-dark");
+
+            // 更新localStorage中的主题状态
+            localStorage.setItem('theme', document.documentElement.classList.contains('theme-dark') ? 'theme-dark' : 'theme-light');
+        });
+    </script>
+</body>
+
+</html>

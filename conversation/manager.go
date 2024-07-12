@@ -70,7 +70,7 @@ func (manager *ConversationManager) Start() {
 				for key, _ := range manager.Rooms[client.RoomNumber].Clients {
 					names += "[ " + key.UserName + " ], "
 				}
-				names = strings.TrimSuffix(names, ", ")
+				names = "<span class='is-inline-block'>" + strings.TrimSuffix(names, ", ") + "</span>"
 				manager.broadcast <- Message{
 					UserName:   client.UserName,
 					Payload:    constant.JoinSuccess + constant.Online + names,
@@ -102,6 +102,7 @@ func (manager *ConversationManager) Start() {
 							names += "[ " + key.UserName + " ], "
 						}
 						names = strings.TrimSuffix(names, ", ")
+						names = "<span class='is-inline-block'>" + strings.TrimSuffix(names, ", ") + "</span>"
 						c.Send <- Message{
 							UserName:   client.UserName,
 							Payload:    constant.ExitSuccess + constant.Online + names,
