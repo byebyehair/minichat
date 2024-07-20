@@ -1,6 +1,6 @@
 # Minichat  
 
-[click to demo](https://minichat.seeyou.me)  
+[click to demo](https://minichatdemo.seeyou.me)  
   
 Minichat 是一款Go语言实现的极简、极轻、无痕匿名聊天工具，开发此程序的本意是用于自己平日与好友临时讨论敏感话题时使用，现开源共享，代码简陋，请多包涵。
 
