@@ -1,6 +1,6 @@
 # MiniChat  
 
-[click to demo](https://chat.lion.im)  
+[click to demo](https://talks.im)  
   
 MiniChat 是一款Go语言实现的极简、极轻、无痕匿名聊天工具，开发此程序的本意是用于自己平日与好友临时讨论敏感话题时使用，现开源共享，代码简陋，请多包涵。
 
@@ -108,3 +108,7 @@ server_url: ""
 ![](screenshots/EnterRoom.jpeg)
 ![](screenshots/ChatView.jpeg)
 ![](screenshots/DarkMode.jpeg)
+
+---
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
